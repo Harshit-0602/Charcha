@@ -1,0 +1,48 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.msg {
+  background-color: #290d4d;
+  color: antiquewhite;
+  height: 8vh; /* Adjust the height to suit your design */
+  padding: 10px;
+  display: flex; /* Optional: Add padding to provide some space around the textarea */
+}
+.inputText {
+  height: 100%;
+  width: 99%;
+  padding: 2px;
+  display: inline-flex;
+}
+textarea {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  color: bisque;
+  resize: none; /* Prevents resizing */
+  overflow-y: hidden; /* Hide vertical scrollbar */
+  border: none; /* Remove border */
+  font-size: 16px; /* Adjust font size as needed */
+  line-height: 2;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.btn {
+  margin-left: 20px;
+  height: 100%;
+  width: auto; /* Allow button to size according to content */
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 5px; /* Add padding for better touch/click target */
+}
+.btn img {
+  width: 100%; /* Make sure the image fits inside the button */
+  height: 70%; /* Maintain aspect ratio */
+}
+.file img {
+  height: 80%;
+}

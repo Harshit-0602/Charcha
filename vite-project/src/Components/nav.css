@@ -1,0 +1,16 @@
+.navbar {
+  background-color: rgb(41, 13, 77);
+  color: antiquewhite;
+  height: 8vh; /* Adjust the height to suit your design */
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Optional: Add padding to provide some space around the textarea */
+}
+.profilePhoto {
+  background-color: aliceblue;
+  width: 3%;
+  height: 100%;
+  border-radius: 100%;
+  margin: 0px 10px;
+}
