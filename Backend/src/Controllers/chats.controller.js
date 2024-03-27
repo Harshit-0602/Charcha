@@ -1,6 +1,6 @@
 import { Chat } from "../Models/chat.model.js";
 import { User } from "../Models/users.model.js";
-import { ObjectId } from "mongoose";
+// import { ObjectId } from "mongoose";
 
 const send = async (req, res) => {
     try {
@@ -17,18 +17,18 @@ const send = async (req, res) => {
         // Assuming route pattern is /users/:userId and URL is https://example.com/users/123
         // console.log("Raw URL:", req.originalUrl);
         const sender = await User.findOne({ email: req.params.sender });
-        const reciever = await User.findOne({ email: req.params.reciever });
+        const receiver = await User.findOne({ email: req.params.receiver });
         // console.log(req.params.sender);
-        // console.log(req.params.reciever);
+        // console.log(req.params.receiver);
         const message = {
         senderName: sender.email,
         msg: text,
         };
-        // console.log("Checking : " + typeof(sender.chattedUsers.get(reciever._id)));
-        //   console.log("Checking : " + typeof (reciever._id));
-        //   const recieverId = new ObjectId(reciever._id);
-        //   console.log(recieverId);
-        const  chatId = sender.chattedUsers.get(reciever._id);
+        // console.log("Checking : " + typeof(sender.chattedUsers.get(receiver._id)));
+        //   console.log("Checking : " + typeof (receiver._id));
+        //   const receiverId = new ObjectId(receiver._id);
+        //   console.log(receiverId);
+        const chatId = sender.chattedUsers.get(receiver._id);
         if (chatId) {
         console.log("Chat Found Just Adding");
         const chat = await Chat.findByIdAndUpdate(
@@ -52,12 +52,12 @@ const send = async (req, res) => {
             { _id: sender._id },
             {
             $set: {
-                [`chattedUsers.${reciever._id}`]: chat._id,
+                [`chattedUsers.${receiver._id}`]: chat._id,
             },
             }
         );
         await User.updateOne(
-            { _id: reciever._id },
+            { _id: receiver._id },
             {
             $set: {
                 [`chattedUsers.${sender._id}`]: chat._id,
@@ -75,4 +75,27 @@ const send = async (req, res) => {
     }
 };
 
-export { send };
+//FIXME: Study about DataBase Indexing and try to use it.....
+
+const fetch = async (req, res) => {
+    try {
+        const sender = await User.findOne({ email: req.params.sender });
+        const receiver = await User.findOne({ email: req.params.receiver });
+        if (sender.chattedUsers.get(receiver._id)) {
+        const chat = await Chat.findById(sender.chattedUsers.get(receiver._id));
+        // console.log(chat);
+            res.status(200).json({ chats:chat.chats });
+            return;
+        }
+        else {
+            res.status(200).json({ chat: {} });
+        }
+    } catch (error) {
+        console.log("Error occurred while fetching chats " + error);
+    }
+    finally {
+        console.log("Fetch Function Executed !");
+    }
+};
+
+export { send, fetch };

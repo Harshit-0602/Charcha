@@ -22,6 +22,9 @@ const userSchema = new Schema({
         type: Map,
         of: { type: ObjectId, ref: Chat },
         default:{}
+    },
+    profileImage: {
+        type:String,
     }
 },
     {
@@ -43,6 +46,7 @@ userSchema.methods.isPasswordCorrect = async function (password) {
 userSchema.methods.generateAccessToken = function () {
     return jwt.sign(
         {
+            _id:this._id,
             username: this.username,
             email: this.email,
             password: this.password

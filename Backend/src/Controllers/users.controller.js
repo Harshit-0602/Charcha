@@ -1,4 +1,5 @@
 import { User } from "../Models/users.model.js";
+import { upload } from "../middlewares/multer.middleware.js";
 
 const option = {
   httpOnly: true,
@@ -90,4 +91,52 @@ const login = async (req, res) => {
   }
 };
 
-export { register, login };
+const logout = async (req, res) => {
+  try {
+    console.log("Logging out");
+    res
+      .status(200)
+      .clearCookie("accessToken", option)
+      .json({ msg: "User Logged Out Successfully ! ", user: req.user });
+  } catch (error) {
+    console.log("Error While Logging Out " + error);
+  }
+};
+
+const uploadProfilePic = async (req, res) => {
+  try {
+    upload.single("profileImage")(req, res, async (err) => {
+      if (err) {
+        res
+          .status(400)
+          .json({ msg: "Error while uploading profile image " + err });
+        return;
+      }
+      console.log("Uploading .........");
+      // console.log(req.file);
+      const base64image = req.file.buffer.toString("base64");
+      // console.log(base64image);
+      // return;r
+      const user = await User.findByIdAndUpdate(
+        req.user._id,
+        {
+          $set: {
+            profileImage: base64image,
+          },
+        },
+        {
+          new: true,
+        }
+      );
+      res
+        .status(200)
+        .json({ msg: "Proile Image Uploaded Successfully !", user });
+    });
+  } catch (error) {
+    console.log("Error While Executing Upload Function " + error);
+  } finally {
+    console.log("Upload Function Executed !");
+  }
+};
+
+export { register, login, logout, uploadProfilePic };
