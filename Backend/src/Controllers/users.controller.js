@@ -1,4 +1,4 @@
-import { User } from "../Models/users.models.js";
+import { User } from "../Models/users.model.js";
 
 const option = {
   httpOnly: true,
@@ -13,22 +13,52 @@ const register = async (req, res) => {
     }
     console.log("All fields are available");
     const userExist = await User.findOne({ email });
-    if (userExist)
-      res.json({ message: "User Already Exists . Try Logging In" });
-    return;
+    if (userExist) {
+      // const savedUser=await User.findByIdAndUpdate(
+      //   { _id: userExist._id },
+      //   {
+      //     $set: {
+      //     "chats.Gaurav":"1"
+      //     }
+      //   },
+      //   {
+      //     new: true,
+      //   }
+      // )
+      // userExist.chats["Priyanshu"] = "1";
+      // console.log(userExist);
+      // await userExist.save()
+      //   .then(savedUser => {
+      //     return User.findById(savedUser._id);
+      //   })
+      //   .then(foundUser => {
+      //     console.log(foundUser);
+      //     res.json({
+      //       message: "User Already Exists . Try Logging In",
+      //       user: foundUser,
+      //     });
+      // })
+      // const savedUser = await User.findById(userExist._id);
+      // console.log(savedUser);
+      res.json({
+        message: "User Already Exists . Try Logging In",
+        user: userExist,
+      });
+      return;
+    }
     console.log("New user found");
     const user = await User.create({
       username,
       email,
       password,
     });
-    res.json({ message: "User Registered Successfully ! " });
+    res.json({ message: "User Registered Successfully ! ", user });
   } catch (error) {
     res.json({
       Error: `Error has occured while registering the user ${error}`,
     });
   } finally {
-    console.log("Registration Successfull");
+    console.log("Registration Function Executed ");
   }
 };
 

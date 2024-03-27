@@ -2,6 +2,9 @@ import mongoose from "mongoose";
 import { Schema } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { Chat } from "./chat.model.js";
+
+const ObjectId = mongoose.Schema.Types.ObjectId;
 const userSchema = new Schema({
     username: {
         type: String,
@@ -15,6 +18,14 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    chattedUsers: {
+        type: Map,
+        of: { type: ObjectId, ref: Chat },
+        default:{}
+    }
+},
+    {
+    timestamps:true,
 });
 
 userSchema.pre("save", async function(next)  {

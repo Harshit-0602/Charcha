@@ -1,9 +1,14 @@
 import { Router } from "Express";
 import { login, register } from "../Controllers/users.controller.js";
+import { chatRouter } from "./chat.routes.js";
 
-const router = Router();
+const userRouter = Router();
 
-router.post("/register", register);
-router.post("/login",login)
+userRouter.post("/register", register);
+userRouter.post("/login", login);
+userRouter.use("/chat", chatRouter);
 
-export { router };
+export { userRouter };
+
+
+
