@@ -1,19 +1,40 @@
 import "./main.css";
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import { Chat } from "../src/Chat/Chat";
 import { Start } from "../src/Start/Start";
+import axios from "axios";
+import { useState,useEffect } from "react";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+ function App() {
+  const [allUsers, setAllUsers] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("/user/fetchUsers")
+      .then((res) => {
+        setAllUsers(res.data.users);
+      })
+      .catch((err) => {
+        console.log("Error occurred while Fetching users .... : " + err);
+      });
+  }, []);
+
+  return (
     <div className="mainDiv">
       <div className="startColumn">
-        <Start />
+        <Start allUsers={allUsers} />
       </div>
       <div className="chatColumn">
-        <Chat />
+        <Chat allUsers={allUsers} />
       </div>
     </div>
-  </React.StrictMode>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <App/>
 );
+
+
 

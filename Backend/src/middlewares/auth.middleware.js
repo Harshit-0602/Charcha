@@ -4,9 +4,10 @@ import { User } from "../Models/users.model.js";
 const authUser = async (req,res,next) => {
     try {
         const token = req.cookies.accessToken;
-        // console.log(token);
+        console.log(token);
         if (!token) {
-            res.status(400).json({ msg: "Token Not Found" });
+            throw new Error("Token Not Found");
+            // res.status(400).json({ msg: "Token Not Found" });
             return;
         }
         const decodedToken = jwt.verify(token,process.env.a_k);

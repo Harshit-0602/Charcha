@@ -1,25 +1,27 @@
 import "./users.css";
 
-const User = () => {
+const User = ({ user }) => {
+  console.log(user);
   return (
     <div className="user">
       <div className="userPhoto"></div>
-      <div className="userName">
-        <span>USER 1</span>
+      <div className="username">
+        <span>{user.username }</span>
       </div>
     </div>
   );
 };
 
-const Users = () => {
+const Users = ({allUsers}) => {
+  
   return (
     <>
       <div className="users">
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
+        {
+          allUsers.map((user) => (
+            <User key={user._id} user={user} />
+          ))
+        }
       </div>
     </>
   );

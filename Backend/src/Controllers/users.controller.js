@@ -13,7 +13,7 @@ const register = async (req, res) => {
       return;
     }
     console.log("All fields are available");
-    const userExist = await User.findOne({ email });
+    const userExist = await User.findOne({ $or: [{ email }, { username }] });
     if (userExist) {
       // const savedUser=await User.findByIdAndUpdate(
       //   { _id: userExist._id },
@@ -139,4 +139,23 @@ const uploadProfilePic = async (req, res) => {
   }
 };
 
-export { register, login, logout, uploadProfilePic };
+const fetchUsers = async (req, res) => {
+  try {
+    console.log("Fetching All the Users .......");
+
+    //Case Insensetive Sorting
+
+    const allUsers = await User.find()
+      .collation({ locale: "en" })
+      .sort({ username: 1 });
+    // console.log(allUsers);
+    res.json({
+      users: allUsers,
+      // currentUser: req.user,
+    });
+  } catch (error) {
+    console.log("Error while fetching all the users..!!!");
+  }
+};
+
+export { register, login, logout, uploadProfilePic, fetchUsers };
