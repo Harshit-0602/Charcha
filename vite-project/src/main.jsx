@@ -4,9 +4,9 @@ import ReactDOM from "react-dom/client";
 import { Chat } from "../src/Chat/Chat";
 import { Start } from "../src/Start/Start";
 import axios from "axios";
-import { useState,useEffect } from "react";
-
- function App() {
+import { useState, useEffect } from "react";
+import { LoginPage } from "./Login/login";
+function App() {
   const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
@@ -14,6 +14,7 @@ import { useState,useEffect } from "react";
       .get("/user/fetchUsers")
       .then((res) => {
         setAllUsers(res.data.users);
+        console.log(res.data.users);
       })
       .catch((err) => {
         console.log("Error occurred while Fetching users .... : " + err);
@@ -34,7 +35,5 @@ import { useState,useEffect } from "react";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <App/>
+  // <LoginPage />
 );
-
-
-

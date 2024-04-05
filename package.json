@@ -6,5 +6,8 @@
     "start:backend": "cd Backend && npm start",
     "start:frontend": "cd vite-project && npm start",
     "start": "npm-run-all --parallel start:backend start:frontend"
+  },
+  "dependencies": {
+    "cors": "^2.8.5"
   }
 }
