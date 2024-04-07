@@ -6,15 +6,37 @@ import { Start } from "../src/Start/Start";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { LoginPage } from "./Login/login";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./Routes/router";
 function App() {
   const [allUsers, setAllUsers] = useState([]);
+  const [currentUser, setCurrentUser] = useState();
+  const [chats, setChats] = useState([]);
+  const [receiver, setReceiver] = useState();
+
+  const loadChat = (user) => {
+    if (!user) {
+      user = currentUser;
+    }
+      axios
+        .get(`/user/chat/fetch/${currentUser?.email}/${user?.email}`)
+        .then((res) => {
+          console.log(res.data.chats);
+          setChats(res.data.chats);
+          setReceiver(user);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
 
   useEffect(() => {
     axios
       .get("/user/fetchUsers")
       .then((res) => {
         setAllUsers(res.data.users);
-        console.log(res.data.users);
+        setCurrentUser(res.data.currentUser);
+        // console.log(currentUser);
       })
       .catch((err) => {
         console.log("Error occurred while Fetching users .... : " + err);
@@ -24,16 +46,24 @@ function App() {
   return (
     <div className="mainDiv">
       <div className="startColumn">
-        <Start allUsers={allUsers} />
+        <Start
+          allUsers={allUsers}
+          currentUser={currentUser}
+          loadChat={loadChat}
+        />
       </div>
       <div className="chatColumn">
-        <Chat allUsers={allUsers} />
+        <Chat currentUser={currentUser} receiver={receiver} chats={chats} />
       </div>
     </div>
   );
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <App/>
+  // <App/>
+  <RouterProvider router={router}/>
   // <LoginPage />
 );
+
+
+export { App };

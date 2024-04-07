@@ -148,10 +148,10 @@ const fetchUsers = async (req, res) => {
     const allUsers = await User.find()
       .collation({ locale: "en" })
       .sort({ username: 1 });
-    // console.log(allUsers);
+    // console.log(req.user);
     res.json({
       users: allUsers,
-      // currentUser: req.user,
+      currentUser: req.user,
     });
   } catch (error) {
     console.log("Error while fetching all the users..!!!");

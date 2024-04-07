@@ -1,4 +1,4 @@
-import { Router } from "Express"
+import { Router } from "express"
 import { send, fetch } from "../Controllers/chats.controller.js";
 import { authUser } from "../middlewares/auth.middleware.js";
 

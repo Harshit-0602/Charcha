@@ -88,7 +88,7 @@ const fetch = async (req, res) => {
             return;
         }
         else {
-            res.status(200).json({ chat: {} });
+            res.status(200).json({ chats: {} });
         }
     } catch (error) {
         console.log("Error occurred while fetching chats " + error);

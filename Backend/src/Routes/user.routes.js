@@ -1,4 +1,4 @@
-import { Router } from "Express";
+import { Router } from "express";
 import {
   fetchUsers,
   login,
@@ -15,7 +15,7 @@ userRouter.post("/register", register);
 userRouter.post("/login", login);
 userRouter.post("/logout", authUser, logout);
 userRouter.post("/profileImage", authUser, uploadProfilePic);
-userRouter.get("/fetchUsers",fetchUsers)
+userRouter.get("/fetchUsers",authUser,fetchUsers)
 userRouter.use("/chat", chatRouter);
 
 export { userRouter };

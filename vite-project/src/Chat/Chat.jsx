@@ -38,12 +38,12 @@ const UrText = () => {
   );
 };
 
-const Chat = () => {
+const Chat = ({currentUser,receiver,chats}) => {
   return (
     <>
       <div className="container">
         <div className="top">
-          <Nav />
+          <Nav user={receiver?receiver:currentUser} />
         </div>
         <div className="talk">
           <MyText />

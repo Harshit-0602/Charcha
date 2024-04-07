@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./login.css";
 import axios from "axios";
-
+import { Link,NavLink,useNavigate } from "react-router-dom";
 const Field = ({ f, input, setter }) => {
   return (
     <div className="Email">
@@ -10,7 +10,7 @@ const Field = ({ f, input, setter }) => {
         placeholder={f}
         onChange={(e) => {
           setter(e.target.value);
-          console.log(input);
+          // console.log(input);
         }}
       />
     </div>
@@ -21,7 +21,7 @@ const RedirectSignIN = () => {
     <>
       <div className="redirectText">
         <span>
-          Already Registered ? <a href="">LOGIN</a>
+          Already Registered ? <NavLink to="/login" className="redirect">LOGIN</NavLink>
         </span>
       </div>
     </>
@@ -32,27 +32,28 @@ const RedirectSignUp = () => {
     <>
       <div className="redirectText">
         <span>
-          Create New Account ... <a href="">SIGN UP</a>
+          Create New Account ... <NavLink to="/" className="redirect">SIGN UP</NavLink>
         </span>
       </div>
     </>
   );
 };
 
-const submitFunc = (check,username, email, password) =>
+const submitFunc = (check,username, email, password,navigate) =>
 {
   if (check) {
     const send = {
       email,
       password
     };
-    axios.post("/user/login", send)
-      .then(res => {
-      console.log(res.data);
+    axios
+      .post("/user/login", send)
+      .then(() => {
+        navigate("/home");  
       })
-      .catch(err => {
-      console.log(err);
-    })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   else {
     const send = {
@@ -62,8 +63,8 @@ const submitFunc = (check,username, email, password) =>
     };
     axios
       .post("/user/register", send)
-      .then((res) => {
-        console.log(res.data);
+      .then(() => {
+        navigate("/login");
       })
       .catch((err) => {
         console.log(err);
@@ -71,15 +72,40 @@ const submitFunc = (check,username, email, password) =>
   }
 };
 
+// const TypingEffect = () => {
+//   const [text, setText] = useState("");
+//   const fullText = "Welcome to CHARCHA ! Your Private Messenger";
+//   useEffect(() => {
+//     let currentIndex = 0;
+//     const interval = setInterval(() => {
+//       if (currentIndex < fullText.length) {
+//         setText((prevText) => prevText + fullText[currentIndex]);
+//         currentIndex++;
+//       } else {
+//         clearInterval(interval); // Clear interval when done typing
+//       }
+//     }, 50); // Adjust speed as needed
+
+//     return () => clearInterval(interval);
+//   }, []);
+//   return (
+//     <h1>{text}</h1>
+//   );
+// }
+
 const LoginPage = ({ check = false }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  
   return (
     <>
       <div className="entrance">
         <div className="welcome">
-          <h1>Welcome</h1>
+          <h1>
+            Welcome to <span>CHARCHA</span> ! Your Private Messenger
+          </h1>
         </div>
         <div className="Register">
           <div className="login">
@@ -94,7 +120,12 @@ const LoginPage = ({ check = false }) => {
             )}
             <Field f={"Email"} input={email} setter={setEmail} />
             <Field f={"Password"} input={password} setter={setPassword} />
-            <button type="submit" onClick={()=>submitFunc(check,username,email,password)}>
+            <button
+              type="submit"
+              onClick={() =>
+                submitFunc(check, username, email, password, navigate)
+              }
+            >
               SUBMIT <span>→</span>
             </button>
             {check == false ? <RedirectSignIN /> : <RedirectSignUp />}

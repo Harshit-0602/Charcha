@@ -45,7 +45,7 @@
   align-items: center;
   margin-top: 10px;
 }
-a {
+.redirect{
   color: yellow;
 }
 button {
@@ -68,4 +68,19 @@ button:hover span {
 }
 .login > h1 {
   margin-bottom: 10px;
+}
+.welcome h1 span{
+  color: yellow;
+}
+.welcome h1{
+  /* margin: 20px; */
+  /* border:solid antiquewhite; */
+  padding: 30px;
+}
+.welcome{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  /* text-shadow:aqua; */
+  /* shape-margin: 10px; */
 }

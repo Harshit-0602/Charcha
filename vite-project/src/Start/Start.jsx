@@ -3,14 +3,15 @@ import { Nav } from "../Components/nav";
 import { Search } from "../Components/searchBox";
 import { Users } from "../Components/users";
 
-const Start = ({allUsers}) => {
+const Start = ({ allUsers, currentUser,loadChat}) => {
+  // console.log(currentUser);
   return (
     <div className="container1">
       <div>
-        <Nav />
+        <Nav user={currentUser} />
       </div>
       <Search />
-      <Users allUsers={allUsers} />
+      <Users allUsers={allUsers}  loadChat={loadChat} />
     </div>
   );
 };
