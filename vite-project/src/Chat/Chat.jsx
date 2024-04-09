@@ -4,16 +4,17 @@ import { Nav } from "../Components/nav";
 import { Search } from "../Components/searchBox";
 import { User, Users } from "../Components/users";
 
-const MyText = () => {
+const MyText = ({msg,time}) => {
   return (
     <>
       <div className="my-msg">
         <div className="text">
           <span>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Id nam
-            minus repellendus fugit neque dolorem blanditiis magnam ipsum
-            reiciendis mollitia animi cupiditate consectetur, quaerat voluptates
-            cum, quos incidunt. Tempore, aperiam!
+            {msg}
+          </span>
+          <br></br>
+          <span>
+            {time}
           </span>
         </div>
       </div>
@@ -21,47 +22,47 @@ const MyText = () => {
   );
 };
 
-const UrText = () => {
+const UrText = ({ msg, time }) => {
   return (
     <>
       <div className="ur-msg">
         <div className="text">
-          <span>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Id nam
-            minus repellendus fugit neque dolorem blanditiis magnam ipsum
-            reiciendis mollitia animi cupiditate consectetur, quaerat voluptates
-            cum, quos incidunt. Tempore, aperiam!
-          </span>
+          <span>{msg}</span>
+          <br></br>
+          <span>{time}</span>
         </div>
       </div>
     </>
   );
 };
 
-const Chat = ({currentUser,receiver,chats}) => {
+const Chat = ({ currentUser, receiver, chats = [] }) => {
+  console.log(typeof chats); // Logs: 'object'
+  console.log(chats); // Logs: []
+
+  // Check if chats is an array using Array.isArray()
+  const isChatsArray = Array.isArray(chats);
+  console.log(isChatsArray); // Logs: true or false
   return (
     <>
       <div className="container">
         <div className="top">
-          <Nav user={receiver?receiver:currentUser} />
+          <Nav user={receiver ? receiver : currentUser} />
         </div>
         <div className="talk">
-          <MyText />
-          <UrText />
-          <MyText />
-          <UrText />
-          <MyText />
-          <UrText />
-          <MyText />
-          <UrText />
-          <MyText />
-          <UrText />
-          <MyText />
-          <UrText />
-          <MyText />
-          <UrText />
-          <MyText />
-          <UrText />
+          {chats.length === 0 || !isChatsArray? (
+            <div className="no-chats-message">
+              <h1>No messages to display</h1>
+            </div>
+          ) : (
+            chats.map((chat) =>
+              chat.senderName === currentUser.username ? (
+                <MyText key={chat.id} msg={chat.msg} time={chat.time} />
+              ) : (
+                <UrText key={chat.id} msg={chat.msg} time={chat.time} />
+              )
+            )
+          )}
         </div>
         <div className="bottom">
           <Msg />
@@ -70,4 +71,5 @@ const Chat = ({currentUser,receiver,chats}) => {
     </>
   );
 };
+
 export { Chat };
