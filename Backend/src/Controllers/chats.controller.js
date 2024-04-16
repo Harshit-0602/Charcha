@@ -98,4 +98,37 @@ const fetch = async (req, res) => {
     }
 };
 
-export { send, fetch };
+const createChat = async (req, res) => {
+    try {
+        const sender = await User.findOne({ email: req.params.sender });
+        const receiver = await User.findOne({ email: req.params.receiver });
+        console.log("Creating Chat");
+        const chat = await Chat.create({
+            chats: [],
+            });
+            await User.updateOne(
+            { _id: sender._id },
+            {
+                $set: {
+                [`chattedUsers.${receiver._id}`]: chat._id,
+                },
+            }
+            );
+            await User.updateOne(
+            { _id: receiver._id },
+            {
+                $set: {
+                [`chattedUsers.${sender._id}`]: chat._id,
+                },
+            }
+        );
+        res.status(200).json({ msg: "Message sent Succefully", chat });
+    } catch (error) {
+        console.log("Error while creating Chat "+error);
+    }
+    finally {
+        console.log("Chat Created Successfully");
+    }
+}
+
+export { send, fetch ,createChat};

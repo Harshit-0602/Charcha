@@ -2,13 +2,27 @@ import axios from "axios";
 import "./users.css";
 import { useState } from "react";
 import { Chat } from "../Chat/Chat";
-
-const User = ({ user, loadChat }) => {
+import { socket } from "../Socket/socket.connection.js";
+const User = ({ user, loadChat, currentUser }) => {
   
   return (
     <>
       <div className="user" onClick={() => {
         loadChat(user);
+        let chatId = currentUser.chattedUsers[user._id];
+        if (chatId == null)
+        {
+          axios.get(`/user/chat/create/${currentUser?.email}/${user?.email}`)
+            .then((res) => {
+              // console.log(res.data.chat);
+              chatId = res.data.chat._id;
+              socket.emit("joinRoom", chatId);
+            });
+        }
+        else
+        {  
+          socket.emit("joinRoom", chatId);
+        }
       }}>
         <div className="userPhoto"></div>
         <div className="username">
@@ -19,14 +33,14 @@ const User = ({ user, loadChat }) => {
   );
 };
 
-const Users = ({allUsers,loadChat}) => {
+const Users = ({allUsers,loadChat,currentUser}) => {
   
   return (
     <>
       <div className="users">
         {
           allUsers.map((user) => (
-            <User key={user._id} user={user} loadChat={loadChat } />
+            <User key={user._id} user={user} loadChat={loadChat } currentUser={currentUser} />
           ))
         }
       </div>

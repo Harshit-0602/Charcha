@@ -11,7 +11,11 @@ const Start = ({ allUsers, currentUser,loadChat}) => {
         <Nav user={currentUser} />
       </div>
       <Search />
-      <Users allUsers={allUsers}  loadChat={loadChat} />
+      <Users
+        allUsers={allUsers}
+        loadChat={loadChat}
+        currentUser={currentUser}
+      />
     </div>
   );
 };
