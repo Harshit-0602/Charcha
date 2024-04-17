@@ -24,7 +24,7 @@ const App = () => {
         setReceiver(user);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("oppppsssssss : "+err);
       });
   };
 
@@ -50,11 +50,15 @@ const App = () => {
         <Start
           allUsers={allUsers}
           currentUser={currentUser}
-            loadChat={loadChat}     
+          loadChat={loadChat}
         />
       </div>
       <div className="chatColumn">
-        <Chat currentUser={currentUser} receiver={receiver} chats={chats} />
+        <Chat
+          currentUser={currentUser}
+          receiver={receiver}
+          initialChats={chats}
+        />
       </div>
     </div>
   );
