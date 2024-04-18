@@ -41,10 +41,10 @@ const Msg = ({ currentUser, user }) => {
             });
           setMessage("");
         }}>
-          <img src="send-message (1).png" alt="" />
+          <img src="send-message-new.png" alt="" />
         </button>
         <button type="file" className="file btn">
-          <img src="attach-file.png" alt="" />
+          <img src="file2.png" alt="" />
         </button>
       </div>
     </div>

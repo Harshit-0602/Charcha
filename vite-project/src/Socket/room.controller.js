@@ -1,5 +1,0 @@
-const joinRoom = () => {
-    
-}
-
-export { joinRoom };

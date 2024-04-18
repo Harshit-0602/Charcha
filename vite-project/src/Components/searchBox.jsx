@@ -5,7 +5,7 @@ const Search = () => {
     <>
       <div className="main">
         <button type="search" className="search btn">
-          <img src="search.png" alt="" />
+          <img src="search (1).png" alt="" />
         </button>
         <input type="search" placeholder="Search"  id="search-box" />
       </div>

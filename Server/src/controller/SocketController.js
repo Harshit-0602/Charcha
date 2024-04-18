@@ -16,7 +16,7 @@ const connect = () => {
     socket.on("Send", (data) => {
       console.log("Msg sent : "+data.msg);
       io.to(data.room).emit("display", {
-        senderName: data.sender,
+        senderName: data.sender.username,
         msg: data.msg,
         time:data.time
       });

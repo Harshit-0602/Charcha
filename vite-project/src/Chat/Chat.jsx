@@ -23,30 +23,29 @@ const Message = ({ msg, time, isMyMessage }) => {
 const Chat = ({ currentUser, receiver, initialChats = [] }) => {
   // console.log(initialChats);
   const [chats, setChats] = useState(initialChats);
-   useEffect(() => {
-     // Update chats when initialChats changes
-     setChats(initialChats);
-   }, [initialChats]);
+  useEffect(() => {
+    // Update chats when initialChats changes
+    setChats(initialChats);
+  }, [initialChats]);
   // console.log(chats);
   useEffect(() => {
-    
-    // Set up event listener for the 'display' event
     if (socket) {
-      // setChats([]);
       socket.on("display", (data) => {
-        // console.log(chats);
-        // console.log(data);
-        // console.log(currentUser);
-        setChats((prevChats) => [...prevChats, data]);
-        // console.log(chats);
+        setChats((prevChats) => {
+          if (Array.isArray(prevChats)) {
+            return [...prevChats, data];
+          } else {
+            return [data];
+          }
+        });
       });
 
-      // Clean up the event listener when the component unmounts
       return () => {
         socket.off("display");
       };
     }
   }, [socket]);
+
 
   return (
     <>
@@ -81,7 +80,7 @@ const Chat = ({ currentUser, receiver, initialChats = [] }) => {
                 key={index}
                 msg={chat.msg}
                 time={chat.time}
-                isMyMessage={chat.senderName.username === currentUser.username}
+                isMyMessage={chat.senderName === currentUser.username}
               />
             ))
           )}

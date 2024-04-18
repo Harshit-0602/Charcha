@@ -21,7 +21,7 @@ const send = async (req, res) => {
         // console.log(req.params.sender);
         // console.log(req.params.receiver);
         const message = {
-        senderName: sender.email,
+        senderName: sender.username,
         msg: text,
         };
         // console.log("Checking : " + typeof(sender.chattedUsers.get(receiver._id)));

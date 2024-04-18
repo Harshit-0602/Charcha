@@ -12,7 +12,7 @@
   background: transparent;
   overflow: hidden;
   padding: 10px;
-  border-right:3px solid burlywood;
+  border-right:3px solid #deb887;
 }
 .chatColumn {
   max-width: 100%;
