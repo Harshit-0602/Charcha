@@ -1,7 +1,9 @@
 .mainDiv {
   width: 100vw;
   height: 100vh;
-  background-color: burlywood;
+  /* background-color: rgb(120, 32, 32); */
+  background: linear-gradient(45deg, #0d0a0a, #4f1316);
+  /* background-color: aqua; */
   display: grid;
   grid-template-columns: 1fr 2fr;
 }
@@ -10,6 +12,7 @@
   background: transparent;
   overflow: hidden;
   padding: 10px;
+  border-right:3px solid burlywood;
 }
 .chatColumn {
   max-width: 100%;

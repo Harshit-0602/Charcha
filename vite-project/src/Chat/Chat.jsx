@@ -21,20 +21,24 @@ const Message = ({ msg, time, isMyMessage }) => {
 };
 
 const Chat = ({ currentUser, receiver, initialChats = [] }) => {
-  console.log(initialChats);
+  // console.log(initialChats);
   const [chats, setChats] = useState(initialChats);
-  console.log(chats);
+   useEffect(() => {
+     // Update chats when initialChats changes
+     setChats(initialChats);
+   }, [initialChats]);
+  // console.log(chats);
   useEffect(() => {
     
     // Set up event listener for the 'display' event
     if (socket) {
       // setChats([]);
       socket.on("display", (data) => {
-        console.log(chats);
-        console.log(data);
-        console.log(currentUser);
+        // console.log(chats);
+        // console.log(data);
+        // console.log(currentUser);
         setChats((prevChats) => [...prevChats, data]);
-        console.log(chats);
+        // console.log(chats);
       });
 
       // Clean up the event listener when the component unmounts
@@ -51,11 +55,23 @@ const Chat = ({ currentUser, receiver, initialChats = [] }) => {
           <Nav user={receiver} />
         </div>
         <div className="talk">
+          {/* <Message
+            key={1}
+            msg="HIiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"
+            time={1}
+            isMyMessage={true}
+          /> */}
+          {/* <Message
+            key={1}
+            msg="HIiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"
+            time={1}
+            isMyMessage={false}
+          /> */}
           {!receiver ? (
             <div className="no-chats-message">
               <h1>Click on the user to start chatting ....</h1>
             </div>
-          ) : chats.length === 0 ? (
+          ) : !Array.isArray(chats) || chats.length === 0 ? (
             <div className="no-chats-message">
               <h1>No messages to display</h1>
             </div>

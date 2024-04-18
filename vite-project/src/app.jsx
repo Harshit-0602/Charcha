@@ -51,6 +51,7 @@ const App = () => {
           allUsers={allUsers}
           currentUser={currentUser}
           loadChat={loadChat}
+          setCurrentUser={setCurrentUser}
         />
       </div>
       <div className="chatColumn">

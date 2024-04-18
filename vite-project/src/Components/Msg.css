@@ -5,7 +5,9 @@
 }
 
 .msg {
-  background-color: #290d4d;
+  /* background-color: #290d4d; */
+  background: transparent;
+  border: 3px solid burlywood;
   color: antiquewhite;
   height: 8vh; /* Adjust the height to suit your design */
   padding: 10px;

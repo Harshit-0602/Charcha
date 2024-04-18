@@ -106,12 +106,15 @@ const createChat = async (req, res) => {
         const chat = await Chat.create({
             chats: [],
             });
-            await User.updateOne(
+           const newSender= await User.findByIdAndUpdate(
             { _id: sender._id },
             {
                 $set: {
                 [`chattedUsers.${receiver._id}`]: chat._id,
                 },
+                },
+                {
+                    new: true,
             }
             );
             await User.updateOne(
@@ -122,7 +125,7 @@ const createChat = async (req, res) => {
                 },
             }
         );
-        res.status(200).json({ msg: "Message sent Succefully", chat });
+        res.status(200).json({ msg: "Message sent Succefully", chat,user:newSender});
     } catch (error) {
         console.log("Error while creating Chat "+error);
     }

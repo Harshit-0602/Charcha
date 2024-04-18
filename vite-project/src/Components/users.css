@@ -1,12 +1,15 @@
 .user {
-  background-color: #290d4d;
+  /* background-color: #290d4d; */
+  background: transparent;
   color: antiquewhite;
+  border-bottom: 3px solid burlywood;
   height: 10vh; /* Adjust the height to suit your design */
   padding: 10px;
   display: flex; /* Optional: Add padding to provide some space around the textarea */
 }
 .user:hover {
-  background-color: #5e3c8a;
+  /* background-color: #5e3c8a; */
+  background-color: rgb(65, 22, 22);
   cursor: pointer;
 }
 .userPhoto {
@@ -26,6 +29,7 @@
 
 .users {
   height: 100%;
-  background-color: #290d4d;
+  /* background-color: #290d4d; */
+  background: transparent;
   overflow: auto;
 }

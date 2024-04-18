@@ -39,6 +39,7 @@ const Msg = ({ currentUser, user }) => {
             .catch((err) => {
               console.log("Error Occurred while saving new msg in database"+err);
             });
+          setMessage("");
         }}>
           <img src="send-message (1).png" alt="" />
         </button>

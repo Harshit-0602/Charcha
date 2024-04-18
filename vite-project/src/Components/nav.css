@@ -1,5 +1,9 @@
 .navbar {
-  background-color: rgb(41, 13, 77);
+  background: transparent;
+  /* background-color: rgb(41, 13, 77); */
+  /* background-color: rgb(120, 32, 32); */
+  /* background: linear-gradient(45deg, #000000, #4f1316); */
+  border-bottom:  3px solid burlywood;
   color: antiquewhite;
   height: 8vh; /* Adjust the height to suit your design */
   padding: 10px;
